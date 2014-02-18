@@ -4,6 +4,7 @@ action :create do
 
   directory base do
     owner new_resource.owner
+    recursive true
   end
 
 end
