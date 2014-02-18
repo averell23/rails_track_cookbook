@@ -5,6 +5,8 @@ action :create do
 
   directory base_dir do
     owner new_resource.owner
+    group new_resource.group
+    mode '0755'
     recursive true
   end
 
@@ -25,6 +27,8 @@ def database_config
 
   template "#{base_dir}/config/database.yml" do
     owner new_resource.owner
+    group new_resource.group
+    mode '0640'
     cookbook 'rails_track'
     source 'database.yml.erb'
     variables(
