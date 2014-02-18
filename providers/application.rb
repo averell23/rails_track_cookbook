@@ -21,11 +21,19 @@ end
 
 def database_config
 
-  directory "#{base_dir}/config" do
+  directory "#{base_dir}/shared" do
     owner new_resource.owner
+    group new_resource.group
+    mode '0755'
   end
 
-  template "#{base_dir}/config/database.yml" do
+  directory "#{base_dir}/shared/config" do
+    owner new_resource.owner
+    group new_resource.group
+    mode '0755'
+  end
+
+  template "#{base_dir}/shared/config/database.yml" do
     owner new_resource.owner
     group new_resource.group
     mode '0640'
@@ -40,6 +48,7 @@ def database_config
 end
 
 def setup_database
+
   connection_info =  {:host => "localhost", :username => 'root', :password => node.mysql.server_root_password }
 
   node.set_unless['rails_track']['database_passwords'][new_resource.app_name] = secure_password
