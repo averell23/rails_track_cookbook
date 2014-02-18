@@ -11,10 +11,11 @@
 # And be sure to use new-style password hashing:
 #   http://dev.mysql.com/doc/refman/5.0/en/old-client.html
 
-adapter: mysql2
-encoding: utf8
-database: <%= @app_name %>
-username: <%= @app_name %>
-password: <%= @password %>
-host: localhost
-reconnect: true
+<%= @environment -%>:
+  adapter: mysql2
+  encoding: utf8
+  database: <%= @app_name %>
+  username: <%= @app_name %>
+  password: <%= @password %>
+  host: localhost
+  reconnect: true

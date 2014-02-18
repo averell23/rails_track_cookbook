@@ -40,6 +40,7 @@ def database_config
     cookbook 'rails_track'
     source 'database.yml.erb'
     variables(
+      :environment => new_resource.rails_env,
       :app_name => new_resource.app_name,
       :password => node['rails_track']['database_passwords'][new_resource.app_name]
     )
