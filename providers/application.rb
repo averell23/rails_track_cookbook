@@ -2,19 +2,39 @@ include Opscode::OpenSSL::Password
 
 action :create do
 
-  base = "#{node.rails_track.app_root}/#{new_resource.app_name}"
 
-  directory base do
+  directory base_dir do
     owner new_resource.owner
     recursive true
   end
 
   setup_database if new_resource.create_database
+  database_config if new_resource.create_database
+
+end
+
+def base_dir
+  "#{node.rails_track.app_root}/#{new_resource.app_name}"
+end
+
+def database_config
+
+  directory "#{base_dir}/config" do
+    owner new_resource.owner
+  end
+
+  template "#{base_dir}/config/database.yml" do
+    owner new_resource.owner
+    source 'database.yml.erb'
+    variables(
+      :app_name => new_resource.app_name,
+      :password => node['rails_track']['database_passwords'][new_resource.app_name]
+    )
+  end
 
 end
 
 def setup_database
-
   connection_info =  {:host => "localhost", :username => 'root', :password => node.mysql.server_root_password }
 
   node.set_unless['rails_track']['database_passwords'][new_resource.app_name] = secure_password
@@ -33,4 +53,5 @@ def setup_database
     privileges [:all]
     action :grant
   end
+
 end
