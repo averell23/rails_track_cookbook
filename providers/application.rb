@@ -25,6 +25,7 @@ def database_config
 
   template "#{base_dir}/config/database.yml" do
     owner new_resource.owner
+    cookbook 'rails_track'
     source 'database.yml.erb'
     variables(
       :app_name => new_resource.app_name,
