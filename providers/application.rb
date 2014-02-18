@@ -12,6 +12,8 @@ action :create do
 end
 
 def setup_database
+  include Opscode::OpenSSL::Password
+
   connection_info =  {:host => "localhost", :username => 'root', :password => node.mysql.server_root_password }
 
   node.set_unless['rails_track']['database_passwords'][new_resource.app_name] = secure_password
