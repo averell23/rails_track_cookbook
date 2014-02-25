@@ -2,12 +2,23 @@ include Opscode::OpenSSL::Password
 
 action :create do
 
-
   directory base_dir do
     owner new_resource.owner
     group new_resource.group
     mode '0755'
     recursive true
+  end
+
+  directory "#{base_dir}/shared" do
+    owner new_resource.owner
+    group new_resource.group
+    mode '0755'
+  end
+
+  directory "#{base_dir}/shared/log" do
+    owner new_resource.owner
+    group new_resource.group
+    mode '0750'
   end
 
   setup_database if new_resource.create_database
@@ -20,12 +31,6 @@ def base_dir
 end
 
 def database_config
-
-  directory "#{base_dir}/shared" do
-    owner new_resource.owner
-    group new_resource.group
-    mode '0755'
-  end
 
   directory "#{base_dir}/shared/config" do
     owner new_resource.owner
