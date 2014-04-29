@@ -94,7 +94,7 @@ def setup_secrets
 
 
   file "#{config_dir}/secrets.yml" do
-    content secrets_from_bag.to_yaml
+    content secrets_from_bag['data'].to_yaml
     owner new_resource.owner
     group new_resource.group
     mode '0640'
