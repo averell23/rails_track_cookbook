@@ -15,4 +15,4 @@ attribute :create_database, :kind_of => [TrueClass, FalseClass, String], :defaul
 # If a string is given, the data_bag_item name defaults to 'secrets'
 #
 # It is assumed that the data bag is encrypted
-attribute :secrets_data, :kind_of => [String, Array], default => nil
+attribute :secrets_data, :kind_of => [String, Array], :default => nil
